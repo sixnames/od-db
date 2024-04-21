@@ -1,6 +1,6 @@
 {
   "name": "od-db",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -20,6 +20,8 @@
     "url": "https://github.com/sixnames/od-db"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.7",
     "eslint": "^8",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
