@@ -50,7 +50,7 @@ export class ODModel<T extends ODModelBase> {
    * @param {ODFilter} query - The query to match documents against.
    * @returns {Promise<T[]>} The documents that match the query.
    */
-  async findMany(query: ODFilter): Promise<T[]> {
+  async findMany(query?: ODFilter): Promise<T[]> {
     const files = await fs.promises.readdir(this.collectionPath);
     const results: T[] = [];
 
@@ -59,6 +59,11 @@ export class ODModel<T extends ODModelBase> {
         const filePath = path.join(this.collectionPath, file);
         const data = await fs.promises.readFile(filePath, 'utf8');
         const document = JSON.parse(data);
+
+        if (!query) {
+          results.push(document);
+          continue;
+        }
 
         const match = this.matchesFilter(document, query);
 
@@ -153,7 +158,6 @@ export class ODModel<T extends ODModelBase> {
         const data = await fs.promises.readFile(filePath, 'utf8');
         const document = JSON.parse(data);
 
-        // Check if the document matches the query
         const match = this.matchesFilter(document, query);
 
         if (match) {
