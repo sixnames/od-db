@@ -132,7 +132,11 @@ export class ODModel<T extends ODModelBase> {
     try {
       const existingData = await this.findOne(id);
       if (existingData) {
-        const updatedData = { ...existingData, ...update };
+        const updatedData = {
+          ...existingData,
+          ...update,
+          updatedAt: new Date().toISOString(),
+        };
         await fs.promises.writeFile(filePath, JSON.stringify(updatedData, null, 2));
         return updatedData;
       } else {

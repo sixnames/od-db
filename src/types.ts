@@ -4,8 +4,8 @@ export interface SayHelloProps {
 
 export interface ODModelBase {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // TODO make less generic
