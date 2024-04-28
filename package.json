@@ -1,6 +1,6 @@
 {
   "name": "od-db",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -27,7 +27,8 @@
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.0",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "date-fns": "^3.6.0"
   },
   "dependencies": {
     "lodash": "^4.17.21",
