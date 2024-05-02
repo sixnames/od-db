@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import {nanoid} from 'nanoid';
-import {ODFilter, ODModelBase} from './types';
-import {get, isObject} from 'lodash';
+import { nanoid } from 'nanoid';
+import { ODFilter, ODModelBase } from './types';
+import { get, isObject } from 'lodash';
 
 /**
  * Class representing a model in the database.
@@ -56,6 +56,10 @@ export class ODModel<T extends ODModelBase> {
 
     try {
       for (const file of files) {
+        if (file.includes('.DS_Store')) {
+          continue;
+        }
+
         const filePath = path.join(this.collectionPath, file);
         const data = await fs.promises.readFile(filePath, 'utf8');
         const document = JSON.parse(data);
@@ -158,6 +162,10 @@ export class ODModel<T extends ODModelBase> {
     const updatedDocuments: T[] = [];
     try {
       for (const file of files) {
+        if (file.includes('.DS_Store')) {
+          continue;
+        }
+
         const filePath = path.join(this.collectionPath, file);
         const data = await fs.promises.readFile(filePath, 'utf8');
         const document = JSON.parse(data);
@@ -209,6 +217,10 @@ export class ODModel<T extends ODModelBase> {
 
     try {
       for (const file of files) {
+        if (file.includes('.DS_Store')) {
+          continue;
+        }
+
         const filePath = path.join(this.collectionPath, file);
         const data = await fs.promises.readFile(filePath, 'utf8');
         const document = JSON.parse(data);

@@ -1,7 +1,3 @@
-export interface SayHelloProps {
-  name: string;
-}
-
 export interface ODModelBase {
   id: string;
   createdAt?: string;

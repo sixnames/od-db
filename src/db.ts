@@ -30,15 +30,16 @@ export class ODDb {
   }
 
   async backup() {
+    console.log('>>>> Backing up db...');
     const parentDir = path.join(process.cwd(), '..');
-    const backupPath = path.join(parentDir, `backup`);
+    const backupPath = path.join(parentDir, `od-db-backup`);
     const dbPath = path.join(process.cwd(), `od-db`);
-    const backupDir = fs.readdirSync(backupPath);
 
     // check if backup directory exists
     if (!fs.existsSync(backupPath)) {
       fs.mkdirSync(backupPath, { recursive: true });
     }
+    const backupDir = fs.readdirSync(backupPath);
 
     const today = new Date();
     const backupDaysLimit = 30;
