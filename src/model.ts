@@ -44,7 +44,8 @@ export class ODModel<T extends ODModelBase> {
       const data = await fs.promises.readFile(filePath, 'utf8');
       return JSON.parse(data);
     } catch (error) {
-      throw new Error(`Error finding document: ${error}`);
+      console.error(`Error finding document: ${error}`);
+      return null;
     }
   }
 
