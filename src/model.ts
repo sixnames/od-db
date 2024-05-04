@@ -34,7 +34,10 @@ export class ODModel<T extends ODModelBase> {
    * @param {string} id - The ID of the document.
    * @returns {Promise<T | null>} The document, or null if not found.
    */
-  async findOne(id: string): Promise<T | null> {
+  async findOne(id?: string): Promise<T | null> {
+    if (!id) {
+      return null;
+    }
     const filePath = path.join(this.collectionPath, `${id}.json`);
 
     try {
