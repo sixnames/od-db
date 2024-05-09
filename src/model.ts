@@ -91,11 +91,13 @@ export class ODModel<T extends ODModelBase> {
   /**
    * Inserts a document into the collection.
    * @param {T} document - The document to insert.
+   * @param fileName
    * @returns {Promise<T | string>} The inserted document.
    */
-  async insertOne(document: T): Promise<T | string> {
+  async insertOne(document: T, fileName?: string): Promise<T | string> {
     const id = (document as any).id || this.generateId();
-    const filePath = path.join(this.collectionPath, `${id}.json`);
+    const finalFileName = fileName || id;
+    const filePath = path.join(this.collectionPath, `${finalFileName}.json`);
 
     try {
       const insertedDocument = { ...document, id };
