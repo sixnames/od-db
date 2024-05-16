@@ -92,7 +92,7 @@ export class ODModel<T extends ODModelBase> {
    * Inserts a document into the collection.
    * @param {T} document - The document to insert.
    * @param fileName
-   * @returns {Promise<T | string>} The inserted document.
+   * @returns {Promise<T | void>} The inserted document.
    */
   async insertOne(document: T, fileName?: string): Promise<T | string> {
     const id = (document as any).id || this.generateId();
@@ -100,7 +100,12 @@ export class ODModel<T extends ODModelBase> {
     const filePath = path.join(this.collectionPath, `${finalFileName}.json`);
 
     try {
-      const insertedDocument = { ...document, id };
+      const insertedDocument = {
+        ...document,
+        id,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
       await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2));
       return insertedDocument;
     } catch (error) {
@@ -119,7 +124,12 @@ export class ODModel<T extends ODModelBase> {
       for (const document of documents) {
         const id = document.id || this.generateId();
         const filePath = path.join(this.collectionPath, `${id}.json`);
-        const insertedDocument = { ...document, id };
+        const insertedDocument = {
+          ...document,
+          id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
         await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2));
         insertedDocuments.push(insertedDocument);
       }
