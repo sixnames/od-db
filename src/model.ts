@@ -94,7 +94,7 @@ export class ODModel<T extends ODModelBase> {
    * @param fileName
    * @returns {Promise<T | void>} The inserted document.
    */
-  async insertOne(document: T, fileName?: string): Promise<T | string> {
+  async insertOne(document: T, fileName?: string): Promise<T | void> {
     const id = (document as any).id || this.generateId();
     const finalFileName = fileName || id;
     const filePath = path.join(this.collectionPath, `${finalFileName}.json`);
