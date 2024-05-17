@@ -205,18 +205,18 @@ export class ODModel<T extends ODModelBase> {
   /**
    * Finds a document by its ID and deletes it.
    * @param {string} id - The ID of the document.
-   * @returns {Promise<T | null>} The deleted document, or null if not found.
+   * @returns {Promise<boolean>} The deleted document, or null if not found.
    */
-  async findByIdAndDelete(id: string): Promise<T | null> {
+  async findByIdAndDelete(id: string): Promise<boolean> {
     const filePath = path.join(this.collectionPath, `${id}.json`);
 
     try {
       const existingData = await this.findOne(id);
       if (existingData) {
         await fs.promises.unlink(filePath);
-        return existingData;
+        return true;
       } else {
-        return null; // Document not found
+        return false; // Document not found
       }
     } catch (error) {
       throw new Error(`Error finding and deleting document: ${error}`);
@@ -226,9 +226,9 @@ export class ODModel<T extends ODModelBase> {
   /**
    * Finds many documents that match a query and deletes them.
    * @param {ODFilter} query - The query to match documents against.
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>}
    */
-  async findManyAndDelete(query: ODFilter): Promise<void> {
+  async findManyAndDelete(query: ODFilter): Promise<boolean> {
     const files = await fs.promises.readdir(this.collectionPath);
 
     try {
@@ -247,6 +247,7 @@ export class ODModel<T extends ODModelBase> {
           await fs.promises.unlink(filePath);
         }
       }
+      return true;
     } catch (error) {
       throw new Error(`Error finding and deleting documents: ${error}`);
     }
