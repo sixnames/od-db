@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { isAfter, subDays } from 'date-fns';
-import process from 'node:process';
 
 interface ErrnoException extends Error {
   errno?: number | undefined;
