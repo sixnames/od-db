@@ -1,6 +1,6 @@
 {
   "name": "od-db",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -22,16 +22,18 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
+    "date-fns": "^3.6.0",
     "eslint": "^8",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.0",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.5",
-    "date-fns": "^3.6.0"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.8",
     "lodash": "^4.17.21",
-    "nanoid": "^5.0.7"
+    "nanoid": "^5.0.7",
+    "uuid": "^9.0.1"
   }
 }
