@@ -1,10 +1,11 @@
 {
   "name": "od-db",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsup"
   },

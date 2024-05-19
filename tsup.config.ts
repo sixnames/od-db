@@ -6,5 +6,6 @@ export default defineConfig({
   dts: true,
   shims: true,
   skipNodeModulesBundle: true,
+  legacyOutput: true,
   clean: true,
 });
