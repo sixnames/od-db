@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-// import { nanoid } from 'nanoid';
-import { v4 as nanoid } from 'uuid';
+import { nanoid } from 'nanoid';
 import { ODFilter, ODModelBase } from './types';
 import { get, isObject } from 'lodash';
 

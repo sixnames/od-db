@@ -1,11 +1,10 @@
 {
   "name": "od-db",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
   "scripts": {
     "build": "tsup"
   },
@@ -31,9 +30,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@types/uuid": "^9.0.8",
     "lodash": "^4.17.21",
-    "nanoid": "^5.0.7",
-    "uuid": "^9.0.1"
+    "nanoid": "^5.0.7"
   }
 }
