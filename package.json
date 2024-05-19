@@ -1,6 +1,6 @@
 {
   "name": "od-db",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -20,6 +20,7 @@
     "url": "https://github.com/sixnames/od-db"
   },
   "devDependencies": {
+    "@swc/core": "^1.5.7",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
     "date-fns": "^3.6.0",
