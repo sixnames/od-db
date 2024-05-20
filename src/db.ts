@@ -69,6 +69,9 @@ export class ODDb {
 
     const newDirName = `${year}-${month}-${day}-${hour}-${minute}`;
     const backupDirPath = path.join(backupPath, newDirName);
+    if (fs.existsSync(backupDirPath)) {
+      fs.rmdirSync(backupDirPath);
+    }
     this.copyDir(dbPath, backupDirPath);
     console.log('>>>> Backup ready <<<<');
   }
