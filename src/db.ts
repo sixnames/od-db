@@ -64,16 +64,10 @@ export class ODDb {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const day = today.getDate();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
 
-    const todayBackups = backupDir.filter((dir) => {
-      const nameArray = dir.split('-');
-      const dirYear = Number(nameArray[0]);
-      const dirMonth = Number(nameArray[1]);
-      const dirDay = Number(nameArray[2]);
-      return dirYear === year && dirMonth === month && dirDay === day;
-    });
-
-    const newDirName = `${year}-${month}-${day}-${todayBackups.length + 1}`;
+    const newDirName = `${year}-${month}-${day}-${hour}-${minute}`;
     const backupDirPath = path.join(backupPath, newDirName);
     this.copyDir(dbPath, backupDirPath);
     console.log('>>>> Backup ready <<<<');
