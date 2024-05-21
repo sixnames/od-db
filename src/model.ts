@@ -4,20 +4,9 @@ import { nanoid } from 'nanoid';
 import { ODFilter, ODModelBase } from './types';
 import { get, isObject } from 'lodash';
 
-/**
- * Class representing a model in the database.
- * @template T - The type of the model, which extends ODModelBase.
- */
 export class ODModel<T extends ODModelBase> {
-  /**
-   * The path to the collection of documents in the database.
-   */
   collectionPath: string;
 
-  /**
-   * Creates a new model.
-   * @param {string} collectionName - The name of the collection.
-   */
   constructor(collectionName: string) {
     this.collectionPath = path.join(process.cwd(), 'od-db', collectionName);
 
@@ -29,11 +18,6 @@ export class ODModel<T extends ODModelBase> {
 
   // QUERIES
   // GET
-  /**
-   * Finds a document by its ID.
-   * @param {string} id - The ID of the document.
-   * @returns {Promise<T | null>} The document, or null if not found.
-   */
   async findOne(id?: string): Promise<T | null> {
     if (!id) {
       return null;
@@ -49,11 +33,6 @@ export class ODModel<T extends ODModelBase> {
     }
   }
 
-  /**
-   * Finds many documents that match a query.
-   * @param {ODFilter} query - The query to match documents against.
-   * @returns {Promise<T[]>} The documents that match the query.
-   */
   async findMany(query?: ODFilter): Promise<T[]> {
     const files = await fs.promises.readdir(this.collectionPath);
     const results: T[] = [];
@@ -88,12 +67,6 @@ export class ODModel<T extends ODModelBase> {
 
   // MUTATIONS
   // CREATE
-  /**
-   * Inserts a document into the collection.
-   * @param {T} document - The document to insert.
-   * @param fileName
-   * @returns {Promise<T | void>} The inserted document.
-   */
   async insertOne(document: T, fileName?: string): Promise<T | void> {
     const id = (document as any).id || this.generateId();
     const finalFileName = fileName || id;
@@ -113,11 +86,6 @@ export class ODModel<T extends ODModelBase> {
     }
   }
 
-  /**
-   * Inserts many documents into the collection.
-   * @param {T[]} documents - The documents to insert.
-   * @returns {Promise<T[] | void>} The inserted documents.
-   */
   async insertMany(documents: T[]): Promise<T[] | void> {
     const insertedDocuments: T[] = [];
     try {
@@ -140,12 +108,6 @@ export class ODModel<T extends ODModelBase> {
   }
 
   // UPDATE
-  /**
-   * Finds a document by its ID and updates it.
-   * @param {string} id - The ID of the document.
-   * @param {Partial<Omit<T, 'id'>>} update - The update to apply to the document.
-   * @returns {Promise<T | null>} The updated document, or null if not found.
-   */
   async findByIdAndUpdate(id: string, update: Partial<Omit<T, 'id'>>): Promise<T | null> {
     const filePath = path.join(this.collectionPath, `${id}.json`);
 
@@ -167,12 +129,6 @@ export class ODModel<T extends ODModelBase> {
     }
   }
 
-  /**
-   * Finds many documents that match a query and updates them.
-   * @param {ODFilter} query - The query to match documents against.
-   * @param {Partial<Omit<T, 'id'>>} update - The update to apply to the documents.
-   * @returns {Promise<T[] | void>} The updated documents.
-   */
   async findManyAndUpdate(query: ODFilter, update: Partial<Omit<T, 'id'>>): Promise<T[] | void> {
     const files = await fs.promises.readdir(this.collectionPath);
     const updatedDocuments: T[] = [];
@@ -202,11 +158,6 @@ export class ODModel<T extends ODModelBase> {
   }
 
   // DELETE
-  /**
-   * Finds a document by its ID and deletes it.
-   * @param {string} id - The ID of the document.
-   * @returns {Promise<boolean>} The deleted document, or null if not found.
-   */
   async findByIdAndDelete(id: string): Promise<boolean> {
     const filePath = path.join(this.collectionPath, `${id}.json`);
 
@@ -223,11 +174,6 @@ export class ODModel<T extends ODModelBase> {
     }
   }
 
-  /**
-   * Finds many documents that match a query and deletes them.
-   * @param {ODFilter} query - The query to match documents against.
-   * @returns {Promise<boolean>}
-   */
   async findManyAndDelete(query: ODFilter): Promise<boolean> {
     const files = await fs.promises.readdir(this.collectionPath);
 
@@ -254,13 +200,30 @@ export class ODModel<T extends ODModelBase> {
   }
 
   // UTILS
-  /**
-   * Counts the number of documents in the collection.
-   * @returns {Promise<number>} The number of documents in the collection.
-   */
   async countDocuments(): Promise<number> {
     const files = await fs.promises.readdir(this.collectionPath);
     return files.length;
+  }
+
+  // drop collection only if not in production environment
+  async dropCollection(): Promise<boolean> {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Cannot drop collection in production environment');
+    }
+
+    try {
+      const files = await fs.promises.readdir(this.collectionPath);
+      for (const file of files) {
+        if (file.includes('.DS_Store')) {
+          continue;
+        }
+        const filePath = path.join(this.collectionPath, file);
+        await fs.promises.unlink(filePath);
+      }
+      return true;
+    } catch (error) {
+      throw new Error(`Error dropping collection: ${error}`);
+    }
   }
 
   // PRIVATE
