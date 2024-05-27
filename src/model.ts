@@ -59,7 +59,7 @@ export class ODModel<T extends ODModelBase> {
         }
       }
     } catch (error) {
-      throw new Error(`Error finding documents: ${error}`);
+      throw new Error(`Error finding documents in ${this.collectionPath} : ${error}`);
     }
 
     return results;
