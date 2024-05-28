@@ -1,6 +1,6 @@
 {
   "name": "od-db",
-  "version": "0.0.46",
+  "version": "0.0.54",
   "description": "do not use this package, it is for testing purposes only",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

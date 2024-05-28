@@ -117,9 +117,11 @@ export class ODModel<T extends ODModelBase> {
         const updatedData = {
           ...existingData,
           ...update,
+          id: existingData.id,
           updatedAt: new Date().toISOString(),
         };
-        await fs.promises.writeFile(filePath, JSON.stringify(updatedData, null, 2));
+        const fileContent = JSON.stringify(updatedData, null, 2);
+        await fs.promises.writeFile(filePath, fileContent);
         return updatedData;
       } else {
         return null; // Document not found
