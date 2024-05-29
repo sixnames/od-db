@@ -79,7 +79,7 @@ export class ODModel<T extends ODModelBase> {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2));
+      await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2), 'utf8');
       return insertedDocument;
     } catch (error) {
       throw new Error(`Error inserting document: ${error}`);
@@ -98,7 +98,7 @@ export class ODModel<T extends ODModelBase> {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
-        await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2));
+        await fs.promises.writeFile(filePath, JSON.stringify(insertedDocument, null, 2), 'utf8');
         insertedDocuments.push(insertedDocument);
       }
       return insertedDocuments;
@@ -108,7 +108,7 @@ export class ODModel<T extends ODModelBase> {
   }
 
   // UPDATE
-  async findByIdAndUpdate(id: string, update: Partial<Omit<T, 'id'>>): Promise<T | null> {
+  async findByIdAndUpdate(id: string, update: T): Promise<T | null> {
     const filePath = path.join(this.collectionPath, `${id}.json`);
 
     try {
@@ -120,8 +120,7 @@ export class ODModel<T extends ODModelBase> {
           id: existingData.id,
           updatedAt: new Date().toISOString(),
         };
-        const fileContent = JSON.stringify(updatedData, null, 2);
-        await fs.promises.writeFile(filePath, fileContent);
+        await fs.promises.writeFile(filePath, JSON.stringify(updatedData, null, 2), 'utf8');
         return updatedData;
       } else {
         return null; // Document not found
@@ -148,7 +147,7 @@ export class ODModel<T extends ODModelBase> {
 
         if (match) {
           const updatedDocument = { ...document, ...update };
-          await fs.promises.writeFile(filePath, JSON.stringify(updatedDocument, null, 2));
+          await fs.promises.writeFile(filePath, JSON.stringify(updatedDocument, null, 2), 'utf8');
         }
         updatedDocuments.push(document);
       }
