@@ -115,7 +115,6 @@ export class ODModel<T extends ODModelBase> {
       const existingData = await this.findOne(id);
       if (existingData) {
         const updatedData = {
-          ...existingData,
           ...update,
           id: existingData.id,
           updatedAt: new Date().toISOString(),
